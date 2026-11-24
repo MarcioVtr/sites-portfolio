@@ -1,0 +1,108 @@
+@import "@fontsource-variable/fraunces/opsz.css";
+@import "@fontsource-variable/fraunces/opsz-italic.css";
+@import "@fontsource-variable/manrope";
+@import "tailwindcss";
+
+
+/* Prova de cor: registrar o acento como <color> permite que a troca de tom seja uma transição. */
+@property --color-terracota { syntax: "<color>"; inherits: true; initial-value: #b5532f; }
+@property --color-terracota-escura { syntax: "<color>"; inherits: true; initial-value: #96401f; }
+@property --color-terracota-suave { syntax: "<color>"; inherits: true; initial-value: #f0dccf; }
+
+/* Telas com mouse (hover real) x telas de toque. */
+@custom-variant mouse (@media (hover: hover) and (pointer: fine));
+@custom-variant toque (@media not all and (hover: hover) and (pointer: fine));
+
+/*
+ * Paleta Âmbar
+ *   fundo     #F4EFE7  linho
+ *   primária  #2B1D14  café
+ *   accent    #B5532F  terracota (promo, descontos, sale)
+ */
+@theme {
+  --color-linho: #f4efe7;
+  --color-linho-escuro: #ebe3d6;
+  --color-areia: #ddd0bd;
+  --color-cafe: #2b1d14;
+  --color-cafe-suave: #4a3527;
+  --color-pedra: #6b5a4c;
+  --color-terracota: #b5532f;
+  --color-terracota-escura: #96401f;
+  --color-terracota-suave: #f0dccf;
+  --color-oliva: #5e5a3a;
+
+  --font-serif: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --animate-sobe: sobe 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-aproxima: aproxima 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-entra: entra 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-treme: treme 0.4s ease-in-out;
+
+  @keyframes sobe {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes aproxima {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+  }
+  @keyframes treme {
+    0%, 100% { transform: none; }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+  @keyframes entra {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+@layer base {
+  html {
+    transition: --color-terracota 0.9s ease, --color-terracota-escura 0.9s ease, --color-terracota-suave 0.9s ease;
+    background: var(--color-linho);
+    color: var(--color-cafe);
+    -webkit-font-smoothing: antialiased;
+    scroll-padding-top: 140px;
+  }
+  body {
+    font-family: var(--font-sans);
+  }
+  ::selection {
+    background: var(--color-terracota);
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-terracota);
+    outline-offset: 3px;
+  }
+}
+
+@utility titulo {
+  font-family: var(--font-serif);
+  font-variation-settings: "opsz" 120;
+  font-weight: 340;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+@utility selo {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+@utility sem-barra {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
